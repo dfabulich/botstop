@@ -34,20 +34,22 @@ public function Setup()
 		}
     }
 
-	public function UserModel_BeforeRegister_Handler($Sender)
-	{
+    public function UserModel_BeforeRegister_Handler($Sender)
+    {
         $test = $Sender->EventArguments['User']['BotCheck'];
-$a1 = C('Plugins.BotStop.Answer1');
-$a2 = C('Plugins.BotStop.Answer2');
-
-if ($test != $a1 && $test != $a2)
-{
-        $Sender->Validation->AddValidationResult('BotCheck','Your humanity is suspect... Please try again.');
+        $a1 = C('Plugins.BotStop.Answer1');
+        $a2 = C('Plugins.BotStop.Answer2');
+           $randnumber = $Sender->EventArguments['User']['BotResult'];
+       //  test for random question
+         if ($randnumber != $test)
+       // unrandomized answer one and two commented out 
+       //  if ($test != $a1 && $test != $a2)
+        {
+        $Sender->Validation->AddValidationResult('BotCheck',T('Your humanity is suspect... Please try again.'));
         $Sender->EventArguments['Valid'] = FALSE;
-}
+        }
        // return FALSE;
-	}
-
+    }
 
 	public function Base_GetAppSettingsMenuItems_Handler($Sender)
 	{
